@@ -12,7 +12,7 @@ class ScheduleItem:
     tot_enrl: int
     cap_enrl: int
     instructor: str
-
+    
     # 2 Implement the get_key() method
     def get_key(self) -> str:
         return f"{self.subject}_{self.catalog}_{self.section}"
