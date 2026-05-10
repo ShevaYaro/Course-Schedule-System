@@ -19,30 +19,29 @@ class Schedule:
         print(f"{'Subject':<8} {'Catalog':<8} {'Section':<8} {'Component':<10} {'Session':<8} {'Units':<7} {'TotEnrl':<8} {'CapEnrl':<8} {'Instructor'}")
 
     def print(self):
-        """Prints the full schedule."""
+        """Prints the full schedule in sorted (inorder) sequence."""
         self.print_header()
-
         for key, course in self.courses.inorder_items():
             course.print()
         
-        # 5. Loop through all the values (the ScheduleItem objects) in our dictionary
-        for course in self.courses.values():
-            # Call the print() method we defined inside the ScheduleItem class
-            course.print()
 
     def find_by_subject(self, subject: str) -> list:
         """Returns a list of courses that match the given subject."""
         # List comprehension filtering by subject
-        return [course for course in self.courses.values() if course.subject == subject]
+        return [course for key, course in self.courses.inorder_items() if course.subject == subject]
 
     def find_by_subject_catalog(self, subject: str, catalog: str) -> list:
         """Returns a list of courses that match both subject and catalog."""
         # List comprehension checking two conditions
-        return [course for key, course in self.courses.inorder_items() if course.subject == subject]
+        return [course for key, course in self.courses.inorder_items() if course.subject == subject and course.catalog == catalog]
 
     def find_by_instructor_last_name(self, last_name: str) -> list:
         """Returns a list of courses taught by an instructor with the given last name."""
-        return [course for course in self.courses.values() if course.instructor.startswith(last_name)]
+        return [course for key, course in self.courses.inorder_items() if course.instructor.startswith(last_name)]
+    
+    def get_tree_height(self) -> int:
+        """Helper method to return the height of the current tree backend."""
+        return self.courses.height()
     
     def load_data(self, filename: str):
         """Reads the CSV file and populates the dictionary with ScheduleItem objects."""

@@ -15,11 +15,11 @@ def main():
     
     
     bst_schedule = Schedule(tree_type="BST")
-    bst_schedule.load_data('courses_2023.csv') 
+    bst_schedule.load_data('courses.csv') 
     
     # 2. Create and load the Self-Balancing AVL Tree
     avl_schedule = Schedule(tree_type="AVL")
-    avl_schedule.load_data('courses_2023.csv')
+    avl_schedule.load_data('courses.csv')
 
     print("Data loaded successfully into both BST and AVL backends!")
 
@@ -61,7 +61,6 @@ def main():
             print("\n--- Tree Height Comparison ---")
             print(f"Unbalanced BST Height:  {bst_schedule.get_tree_height()}")
             print(f"Self-Balancing AVL Height: {avl_schedule.get_tree_height()}")
-            print("\n(Note: The AVL tree should be significantly shorter because it balances itself!)")
 
         elif choice == '6':
             print("\nExiting the Course Schedule System. Goodbye!")
