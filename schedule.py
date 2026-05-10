@@ -1,14 +1,18 @@
 import csv 
 from schedule_item import ScheduleItem
+from search_trees import BSTMap, AVLTreeMap
 
 class Schedule:
-    def __init__(self):
-        self.courses = {}
+    def __init__(self, tree_type="BST"):
+        if tree_type == "AVL":
+            self.courses = AVLTreeMap()
+        else:
+            self.courses = BSTMap()
 
     def add_entry(self, item: ScheduleItem):
         """Adds a ScheduleItem to the dictionary using its unique key."""
         key = item.get_key()
-        self.courses[key] = item
+        self.courses.insert(key, item)
 
     def print_header(self):
         """Prints the column headers for the schedule report."""
@@ -17,6 +21,9 @@ class Schedule:
     def print(self):
         """Prints the full schedule."""
         self.print_header()
+
+        for key, course in self.courses.inorder_items():
+            course.print()
         
         # 5. Loop through all the values (the ScheduleItem objects) in our dictionary
         for course in self.courses.values():
@@ -31,7 +38,7 @@ class Schedule:
     def find_by_subject_catalog(self, subject: str, catalog: str) -> list:
         """Returns a list of courses that match both subject and catalog."""
         # List comprehension checking two conditions
-        return [course for course in self.courses.values() if course.subject == subject and course.catalog == catalog]
+        return [course for key, course in self.courses.inorder_items() if course.subject == subject]
 
     def find_by_instructor_last_name(self, last_name: str) -> list:
         """Returns a list of courses taught by an instructor with the given last name."""
